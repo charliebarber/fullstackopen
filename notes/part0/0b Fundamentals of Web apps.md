@@ -1,10 +1,10 @@
 ---
-title: Fundamentals of Web apps
+title: 0b Fundamentals of Web apps
 created: '2020-06-05T16:56:32.802Z'
-modified: '2020-06-05T18:54:23.384Z'
+modified: '2020-06-06T14:39:03.338Z'
 ---
 
-# Fundamentals of Web apps
+# 0b Fundamentals of Web apps
 
 **First rule of web development** - always keep dev tools opens. On network tab, check *Disable cache* option and *Preserve log*
 

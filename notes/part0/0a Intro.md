@@ -1,10 +1,10 @@
 ---
-title: Intro
+title: 0a Intro
 created: '2020-06-05T16:45:04.912Z'
-modified: '2020-06-05T16:53:35.053Z'
+modified: '2020-06-06T14:38:54.450Z'
 ---
 
-# Intro 
+# 0a Intro 
 
 ## Course structure
 * Each part is roughly one week
