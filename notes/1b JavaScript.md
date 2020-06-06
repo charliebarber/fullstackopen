@@ -1,7 +1,7 @@
 ---
 title: 1b JavaScript
 created: '2020-06-06T15:48:50.375Z'
-modified: '2020-06-06T16:19:04.019Z'
+modified: '2020-06-06T20:19:05.056Z'
 ---
 
 # 1b JavaScript
@@ -153,4 +153,81 @@ const sum = (p1, p2) => {
     * Definition resides among rest of code
 * This course will define all functions with arrow syntax
 
-  
+## Object methods and "this"
+As we are using a React version with React hooks we do not need to define objects with methods. This is not relevant to the course as a whole but it is good to know
+
+* Arrow functions and functions defined with `function` are different in how they behave with the keyword `this`, which refers to the object itself
+
+```js
+const arto = {
+  name: 'Arto Hellas',
+  age: 35,
+  education: 'PhD',
+  greet: function() {
+    console.log('hello, my name is ' + this.name)
+  },
+  doAddition: function(a, b) {
+    console.log(a + b)
+  },
+}
+
+arto.doAddition(1, 4)        // 5 is printed
+
+const referenceToAddition = arto.doAddition
+referenceToAddition(10, 15)   // 25 is printed
+```
+* We can add functions into an object by creating them as a property
+  * known as an object method
+* The object itself can referenced using `this` keyword
+* We can create a method reference as a variable to a method object
+  * However, this causes problems as we are unable to use this keyword
+    * value of `this` is based on how the method was called
+      * calling through a method reference makes this be part of the global object
+        * different to other languages
+      * Not knowing what `this` is referencing causes issues
+        * In React or Node often
+        * The course avoids this using "this-less" JS
+      * One way to preserve this is using method `bind`
+      * Arrow functions solve some of these problems
+        * However, they don't work in objects
+        * To understand better, watch [this screen cast](https://egghead.io/courses/understand-javascript-s-this-keyword-in-depth)
+
+## Classes
+* Unlike OOP, there is no class mechanism in JS
+  * However, JS includes features which simulate object oriented classes
+* *Class syntax* introduced in ES6
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name
+    this.age = age
+  }
+  greet() {
+    console.log('hello, my name is ' + this.name)
+  }
+}
+
+const adam = new Person('Adam Ondra', 35)
+adam.greet()
+
+const janja = new Person('Janja Garnbret', 22)
+janja.greet()
+```
+* Here we define a class called Person and two objects from this class
+* Similar in syntax to Java classes and objects
+  * Similar behaviour also
+* Based on JS prototypal inheritance
+  * The type of both created objects above is `Object` as JS only defines types Boolean, Null, Undefined, Number, String, Symbol and Object
+* Class syntax is controversial
+* It is used a lot on "old" React and Node.js
+  * Since we are using React hooks, we do not need JS class syntax.  
+
+## Prototypal inheritance
+Not included on course, but I have never really understood it so worth noting
+* For example, we could have a `user` object with its own properties and methods and then want to make an `admin` object and `guest` object as slightly modified versions
+  * We would want to reuse parts of `users` and build a new object from it
+    * Prototypal inheritance lets us do that
+* JS Objects have a hidden `[[Prototype]]` property which can be null or reference another object
+  * The object it references is known as a 'prototype'
+  * If there is a property in a object that we want to read but it is missing
+    * JS automatically takes it from its prototype object (if there is one)    
