@@ -7,6 +7,8 @@ const Button = (props) => {
   )
 }
 
+const VoteDisplay = ({votes}) => <p>has {votes} votes</p>;
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState([0,0,0,0,0,0])
@@ -17,18 +19,40 @@ const App = (props) => {
   }
 
   const vote = (selected) => {
-    console.log(selected, 'voted')
     const voteCopy = [...votes]
     voteCopy[selected] += 1
     setVotes(voteCopy)
+
   }
+
+  const findMostVotedAnecdote = (array) => {
+    console.log('called')
+    let largestVal = 0;
+    let arrayIndex = 0;
+
+    for (let i=0; i<array.length; i++) {
+      if (array[i] > largestVal) {
+        largestVal = array[i]
+        arrayIndex = i;
+      }
+    }
+    return arrayIndex;
+  }
+
+  const mostVotedAnecdote = props.anecdotes[findMostVotedAnecdote(votes)];
+  
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {props.anecdotes[selected]}
-      <br />
+      <VoteDisplay votes={votes[selected]} />
       <Button text="Next anecdote" handleClick={() => chooseRandomAnecdote()} />
       <Button text="Vote" handleClick={() => vote(selected)} />
+
+      <h1>Anecdote with most votes</h1>
+      {mostVotedAnecdote}
+      <VoteDisplay votes={votes[findMostVotedAnecdote(votes)]} />
     </div>
   )
 }
