@@ -5,8 +5,11 @@ const FeedbackBtn = ({text, handleClick}) => (
   <button onClick={handleClick}>{text}</button>
 )
 
-const Counter = ({text,value}) => (
-  <p>{text} {value}</p>
+const Statistic = ({text,value}) => (
+  <tr>
+    <td>{text}</td> 
+    <td>{value}</td>
+  </tr>
 )
 
 const Statistics = ({good,neutral,bad}) => {
@@ -16,14 +19,16 @@ const Statistics = ({good,neutral,bad}) => {
 
   if (good + neutral + bad > 0) {
     return (
-      <div>
-        <Counter text="Good" value={good} />
-        <Counter text="Neutral" value={neutral} />
-        <Counter text="Bad" value={bad} />
-        <Counter text="All" value={total} />
-        <Counter text="Average" value={average} />
-        <Counter text="Positive" value={positivepercent} />
-        </div>
+      <table>
+        <tbody>
+          <Statistic text="Good" value={good} />
+          <Statistic text="Neutral" value={neutral} />
+          <Statistic text="Bad" value={bad} />
+          <Statistic text="All" value={total} />
+          <Statistic text="Average" value={average} />
+          <Statistic text="Positive" value={positivepercent} />
+        </tbody>
+      </table>
     )
   } else {
     return (
