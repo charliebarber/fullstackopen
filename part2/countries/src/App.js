@@ -17,38 +17,70 @@ const Search = (props) => {
   )
 }
 
-const Results = ({results}) => {
+const Display = ({results}) => {
   
   if (results.length > 10) {
     return (
       <p>Too many matches. Search again</p>
     )
   } else if (results.length === 1) {
-    const country = results[0]
     return (
-      <div>
-        <h1>{country.name}</h1>
-        <p>Capital: {country.capital}</p>
-        <p>Population: {country.population}</p>
-        <h2>Languages</h2>
-        <ul>
-        {
-          country.languages.map((language) => <li key={language.iso639_2}>{language.name}</li>)
-        }
-        </ul>
-        <img src={country.flag} width="10%"></img>
-      </div>
+      <CountryView country={results[0]} />
     )
   } else if (results.length <= 10 ) {
     return (
-      <div>
-        {
-          results.map((country) => <p key={country.callingCodes}>{country.name}</p>)
-        }
-      </div>
+      <Results results={results} />
     )
   } 
 
+}
+
+const CountryView = ({country}) => {
+  return (
+    <div>
+      <h1>{country.name}</h1>
+      <p>Capital: {country.capital}</p>
+      <p>Population: {country.population}</p>
+      <h2>Languages</h2>
+      <ul>
+      {
+        country.languages.map((language) => <li key={language.iso639_2}>{language.name}</li>)
+      }
+      </ul>
+      <img src={country.flag} width="10%" alt="Country flag"></img>
+    </div>
+  )
+}
+
+const Results = ({results}) => {
+
+  return (
+    <div>
+    {
+      results.map((country) => {
+      return( 
+        <ListedCountry key={country.callingCodes} country={country} />
+      )
+      })
+    }
+    </div>
+  )
+}
+
+const ListedCountry = ({country}) => {
+  const [show, setShow] = useState(false);
+
+  const handleShow = (event) => {
+    event.preventDefault()
+    setShow(!show) 
+  }
+
+  return (
+    <div>
+      {country.name}<button onClick={handleShow}>Show</button>
+      { show ? <CountryView country={country}/> : <p></p>}
+    </div>
+  )
 }
 
 const App = () => {
@@ -57,17 +89,14 @@ const App = () => {
   const [search, setSearch] = useState([]);
 
   useEffect(() => {
-    console.log('use effect')
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
-        console.log('then')
         setCountries(response.data)
       })
   },[])
 
   const handleSearch = (event) => {
-    console.log('handle search called')
     event.preventDefault()
     if (event.target.value === '') {
       setNewSearch(event.target.value)
@@ -93,7 +122,7 @@ const App = () => {
   return (
     <div>
       <Search onSearch={handleSearch} value={newSearch}/>
-      <Results results={search} />
+      <Display results={search} />
     </div>
   );
 }
