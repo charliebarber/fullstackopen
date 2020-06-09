@@ -1,7 +1,7 @@
 ---
 title: 2c Getting data from server
 created: '2020-06-09T13:06:47.118Z'
-modified: '2020-06-09T14:11:14.533Z'
+modified: '2020-06-09T18:27:48.387Z'
 ---
 
 # 2c Getting data from server
@@ -58,5 +58,5 @@ modified: '2020-06-09T14:11:14.533Z'
   * it takes two parameters
     * The function, aka the *effect* which runs after a render
     * Then, optionally, how often the effect is run
-    
+  
 
