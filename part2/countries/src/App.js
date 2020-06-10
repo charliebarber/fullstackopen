@@ -18,6 +18,7 @@ const App = () => {
       })
   },[])
 
+
   const handleSearch = (event) => {
     event.preventDefault()
     if (event.target.value === '') {
