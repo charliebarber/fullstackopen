@@ -1,23 +1,23 @@
 import React from "react";
 
-const Numbers = ({ numbers }) => {
+const Numbers = ({ numbers, handleDeleteOf }) => {
   return (
     <div>
       <h2>Numbers</h2>
       <div>
         {numbers.map((number) => (
-          <Number key={number.name} details={number} />
+          <Number key={number.id} details={number} handleDelete={() => handleDeleteOf(number)}/>
         ))}
       </div>
     </div>
   );
 };
 
-const Number = ({ details }) => {
+const Number = ({ details, handleDelete }) => {
   return (
-    <p>
-      {details.name} : {details.number}
-    </p>
+    <div>
+      {details.name} : {details.number} <button onClick={handleDelete}>Delete</button>
+    </div>
   );
 };
 
