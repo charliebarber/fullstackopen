@@ -3,6 +3,7 @@ import Filter from './Components/Filter';
 import Numbers from './Components/Numbers'
 import PersonForm from './Components/PersonForm';
 import personsService from './services/persons';
+import Notification from './Components/Notification';
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -32,6 +33,11 @@ const App = () => {
           .update(existing.id, updated)
           .then((response) => {
             setPersons(persons.map((person) => person.id !== existing.id ? person : response))
+            displayMessage(`Updated ${updated.name}`)
+          })
+          .catch(error => {
+            displayMessage(`Error. ${updated.name} has already been deleted from the server`)
+            setPersons(persons.filter(person => person.name !== existing.name))
           })
       }
     } else {
@@ -50,6 +56,7 @@ const App = () => {
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
+        displayMessage(`Added ${personObject.name}`)
       })
   }
 
@@ -85,10 +92,19 @@ const App = () => {
       })
   }
 
+  const [message, setMessage] = useState('') 
+
+  const displayMessage = (message) => {
+    setMessage(message)
+    setTimeout(() => {
+      setMessage('')
+    },3000)
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter 
         value={newSearch}
         onSearch={handleSearch}
