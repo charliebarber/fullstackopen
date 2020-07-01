@@ -76,8 +76,18 @@ const App = () => {
             setTitle('')
             setAuthor('')
             setURL('')
+            setMessage(`New blog: ${response.title} by ${response.author} has been added`)
+            setTimeout(() => {
+                setMessage(null)
+            }, 5000)
         })
-        .catch(error => console.log(error))
+        .catch((error) => {
+            console.log(error)
+            setMessage('Unable to add blog')
+            setTimeout(() => {
+                setMessage(null)
+            }, 5000)
+        })
 
   }
 
