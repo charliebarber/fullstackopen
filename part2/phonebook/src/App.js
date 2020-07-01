@@ -6,7 +6,7 @@ import personsService from './services/persons';
 import Notification from './Components/Notification';
 
 const App = () => {
-  const [ persons, setPersons ] = useState([]) 
+  const [persons, setPersons ] = useState([]) 
   const [newName, setNewName] = useState("");
   const [newNum, setNewNum] = useState("");
 
@@ -55,8 +55,12 @@ const App = () => {
     personsService
       .create(personObject)
       .then(returnedPerson => {
+        console.log('then called', returnedPerson)
         setPersons(persons.concat(returnedPerson))
         displayMessage(`Added ${personObject.name}`)
+      })
+      .catch(error => {
+        displayMessage(error.response.data.error)
       })
   }
 
@@ -78,7 +82,7 @@ const App = () => {
     } else {
       event.preventDefault();
       setNewSearch(event.target.value)
-      const searchResults = persons.filter((person) => person.name.includes(event.target.value));
+      const searchResults = persons.filter((person) => person.name.toLowerCase().includes(event.target.value.toLowerCase()));
       setSearch(searchResults)
     }
   }

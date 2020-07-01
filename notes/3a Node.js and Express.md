@@ -1,7 +1,7 @@
 ---
 title: 3a Node.js and Express
 created: '2020-06-11T21:42:07.038Z'
-modified: '2020-06-12T11:08:26.428Z'
+modified: '2020-06-12T17:04:45.389Z'
 ---
 
 # 3a Node.js and Express
@@ -97,4 +97,17 @@ app.get('/api/notes/:id', (request, response) => {
 
 ## Receiving data
 * To access data easily, use express json-parser `app.use(express.json())
+
+## About HTTP request types
+* HTTP GET request should be safe according to HTTP standard
+  * Meaning it should NOT do anything other than retrieve
+* All HTTP requests except POST should be *idempotent*
+  * Meaning that if a request has side effects then the result should always be the same no matter how many times you send the request
+
+## Middleware
+* Functions that can be used for handling `request` and `reponse` objects
+  * eg json-parser
+    * this takes raw data from `request` object, parses it into a JS object and assigns it to `request` object as a new property `body`
+* Can have multiple middleware
+  * they are executed in order they were taken into use in express
 
