@@ -16,12 +16,18 @@ const App = () => {
     const [author, setAuthor] = useState('')
     const [url, setURL] = useState('')
     const [message, setMessage] = useState(null)
+    const [update, setUpdate] = useState(null)
 
     useEffect(() => {
         blogService.getAll().then(blogs =>
-        setBlogs( blogs )
+            setBlogs( blogs )
         )  
-    }, [])
+    }, [update])
+
+    // useEffect(() => {
+    //     console.log('sort effect called')
+    //     setBlogs( blogs.sort((a,b) => a.likes > b.likes ? -1 : 1) )
+    // }, [])
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -154,8 +160,10 @@ const App = () => {
                 />
             </Togglable>
             <div>
-                {blogs.map(blog =>
-                    <Blog key={blog.id} blog={blog} />
+                {blogs
+                    .sort((a,b) => a.likes > b.likes ? -1 : 1)
+                    .map(blog =>
+                    <Blog key={blog.id} blog={blog} setUpdate={setUpdate}/>
                 )}
             </div>
         </div>
